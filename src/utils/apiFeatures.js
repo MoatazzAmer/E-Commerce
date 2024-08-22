@@ -12,7 +12,7 @@ export class ApiFeatures{
         if(this.searchQuery.page < 1) pageNumber = 1;
         const limit =2 ;
         let skip = (pageNumber -1) * limit
-
+        this.pageNumber = pageNumber
         this.mongooseQuery.skip(skip).limit(limit);
         return this
     }
@@ -29,7 +29,7 @@ export class ApiFeatures{
         })
         this.mongooseQuery.find(filterObj)
         return this
-    }
+    }   
 
     sort(){
         if(this.searchQuery.sort){
@@ -51,8 +51,8 @@ export class ApiFeatures{
             this.mongooseQuery.find(
                 {
                     $or:[
-                        {title : {$regex : this.searchQuery.search , option :'i'}},
-                        {description : {regex : this.searchQuery.search , option:'i'}}
+                        {title : {$regex : this.searchQuery.search , $option :'i'}},
+                        {description : {regex : this.searchQuery.search , $option:'i'}}
                     ]
                 }
             )

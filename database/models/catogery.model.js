@@ -23,7 +23,7 @@ const schema = new Schema({
 });
 
 schema.post('init',function(doc){
-    if(doc.image) doc.image = 'http://localhost:3000/uploads/catogries/' + doc.image
+    if(doc.image) doc.image = process.env.BASE_URL +'catogries/' + doc.image
 })
 
 export const Catoogery = model('Catogery',schema)

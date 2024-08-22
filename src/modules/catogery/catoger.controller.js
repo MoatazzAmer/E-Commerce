@@ -3,16 +3,17 @@ import { Catoogery } from "../../../database/models/catogery.model.js";
 import { catchError } from "../../midleWare/catchError.js";
 import { appError } from "../../utils/appError.js";
 import { deleteOne, getAll } from '../../utils/cradModel.js';
+import { ApiFeatures } from '../../utils/apiFeatures.js';
 
 
 
 const addCatogery = catchError(async(req,res,next)=>{
     req.body.slug = slugify(req.body.name);
-    req.body.image = req.file.filename
+    req.body.image = req.file.filename;
     const catogery = new Catoogery(req.body);
 
-    await catogery.save()
-    res.status(201).json({message : 'Success Added' , catogery})
+    await catogery.save();
+    res.status(201).json({message : 'Success Added' , catogery});
 
 });
 
@@ -22,12 +23,13 @@ const getOneCatogery = catchError(async(req,res,next)=>{
     const catogery = await Catoogery.findById(req.params.id);
 
     catogery ||  next(new appError('Catogery Not Found' , 401));
-    !catogery || res.status(201).json({message :'Success Get One Catogery',catogery})
+    !catogery || res.status(201).json({message :'Success Get One Catogery',catogery});
+
 })
 
 
 const getAllCatogery = catchError(async(req,res,next)=>{
-    
+
     let apiFeatures = new ApiFeatures(Catoogery.find(), req.query)
     .pagination().filter().fields().sort().search()
     const catogery = await apiFeatures.mongooseQuery

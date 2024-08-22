@@ -3,7 +3,7 @@ import { dbConn } from './database/dbConnextion.js';
 import { globalError } from './src/midleWare/globalError.js';
 import { appError } from './src/utils/appError.js';
 import { bootStrap } from './src/bootStrap.js';
-
+import 'dotenv/config'
 
 
 const app = express();

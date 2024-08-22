@@ -9,7 +9,7 @@ import { ApiFeatures } from '../../utils/apiFeatures.js';
 
 const addBrand = catchError(async(req,res,next)=>{
     req.body.slug = slugify(req.body.name);
-    req.body.image = req.file.filename
+    req.body.logo = req.file.filename
     const brand = new Brand(req.body);
 
     await brand.save()

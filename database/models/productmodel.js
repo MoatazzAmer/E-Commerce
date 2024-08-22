@@ -62,12 +62,26 @@ const schema = new Schema({
     rateCount :Number
 },{
     versionKey:false,
-    timestamps:true
+    timestamps:true,
+    toJSON: { virtuals: true },
+    id :false
 });
 
+
+schema.virtual('myReview', {
+    ref: 'Review',
+    localField: '_id',
+    foreignField: 'product',
+});
+
+schema.pre('findOne',function(){
+    this.populate('myReview')
+})
+
+
 schema.post('init',function(doc){
-    if(doc.imageCover) doc.imageCover = "http://localhost:3000/uploads/product/" + doc.imageCover
-    if(doc.images) doc.images = doc.images.map(val => "http://localhost:3000/uploads/product"+val)
+    if(doc.imageCover) doc.imageCover = process.env.BASE_URL +"products/" + doc.imageCover
+    if(doc.images) doc.images = doc.images.map(val =>process.env.BASE_URL + "products/"+val)
 })
 
 export const Product = model('Product',schema)

@@ -1,6 +1,5 @@
-import { model, Schema } from "mongoose";
-
-
+import bcrypt from 'bcrypt';
+import { model, Schema, Types } from "mongoose";
 
 const schema = new Schema({
     name : {
@@ -22,12 +21,27 @@ const schema = new Schema({
         type :Boolean,
         default :false
     },
+    passwordChangedAt:Date,
     otp : String,
-    otpExpires : Date
+    otpExpires : Date,
+    adresses :[{
+        city : String,
+        phone : String,
+        street : String
+    }],
+    wishList :[{type:Types.ObjectId , ref :'Product'}]
 },{
     versionKey: false,
     timestamps:true
 });
 
 
-export const User = model('User', schema)
+schema.pre('save',function(){
+    this.password = bcrypt.hashSync(this.password , 10)
+})
+
+schema.pre('findOneAndUpdate',function(){
+    if(this._update.password) this._update.password = bcrypt.hashSync(this._update.password , 10)
+})
+
+export const User = model('User', schema)                  

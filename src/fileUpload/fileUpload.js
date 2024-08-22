@@ -6,10 +6,10 @@ import { v4 as uuidv4 } from 'uuid'
 const uploadFile = (folderName)=>{
     const storage = multer.diskStorage({
         destination:(req, file, cb) =>{
-        cb(null, `uploads/ ${folderName}`)
+        cb(null, `uploads/${folderName}`)
         },
         filename:  (req, file, cb)=> {
-        cb(null,uuidv4 + "-" + file.originalname)
+        cb(null, uuidv4() + "-" + file.originalname)
         }
     })
 

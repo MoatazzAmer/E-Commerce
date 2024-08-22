@@ -14,7 +14,7 @@ const addCatVal = Joi.object({
         filename : Joi.string().required(),
         path :Joi.string().required()
     }).required(),
-
+    image :Joi.object().required()
 });
 
 const updateCatVal = Joi.object({

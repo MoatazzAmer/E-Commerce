@@ -25,4 +25,8 @@ const schema = new Schema({
     timestamps:true
 });
 
+schema.pre(/^findOne/,function(){
+    this.populate('catogery')
+})
+
 export const SubCatoogery = model('SubCatogery',schema)

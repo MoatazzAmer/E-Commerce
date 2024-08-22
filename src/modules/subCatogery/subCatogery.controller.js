@@ -20,7 +20,7 @@ const addSubCatogery = catchError(async(req,res,next)=>{
 const getOneSubCatogery = catchError(async(req,res,next)=>{
 
 
-    const subcatogery = await SubCatoogery.findById(req.params.id).populate('catogery');
+    const subcatogery = await SubCatoogery.findById(req.params.id)
 
     subcatogery ||  next(new appError('Catogery Not Found' , 401));
     !subcatogery || res.status(201).json({message :'Success Get One Subcatogery',subcatogery})
